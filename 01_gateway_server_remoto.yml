@@ -1,0 +1,30 @@
+server:
+  port: 7000
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: serv-vuelos
+          uri: lb://01-mcsv-vuelos-remoto
+          predicates:
+            - Path=/svuelos/**
+          filters:
+            - RewritePath=/svuelos/*, /
+
+        - id: serv-hoteles
+          uri: lb://01-mcsv-hoteles-remoto
+          predicates:
+            - Path=/shoteles/**
+          filters:
+            - RewritePath=/shoteles/*, /
+
+        - id: serv-reservas
+          uri: lb:////01-mcsv-reservas-remoto
+          predicates:
+            - Path=/sreservas/**
+          filters:
+            - RewritePath=/sreservas/*, /        
+eureka:                  
+ client:
+  serviceUrl:
+   defaultZone: http://localhost:8761/eureka  
